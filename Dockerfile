@@ -21,7 +21,7 @@ WORKDIR "/src/TodoApi.Tests"
 RUN dotnet test --no-build -c Release --verbosity normal
 
 # Stage 3: Publish
-FROM build AS publish
+FROM test AS publish
 WORKDIR "/src/TodoApiApp"
 RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish --no-restore
 
