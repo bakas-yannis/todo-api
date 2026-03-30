@@ -1,0 +1,24 @@
+name: .NET 10 Docker CI
+
+# This defines WHEN the action runs
+on:
+  pull_request:
+    branches: [ "main" ]  # Runs when a PR is opened to main
+  push:
+    branches: [ "main" ]  # Also runs when you merge into main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your code onto the GitHub runner
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Build the Docker image
+      # This will automatically run 'dotnet restore', 'build', and 'test' 
+      # because they are stages in your Dockerfile.
+      - name: Build and Test with Docker
+        run: |
+          docker build -t todo-api-ci:${{ github.sha }} .
