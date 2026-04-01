@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.102-noble AS build
 WORKDIR /src
 
 # 1. Copy only the project files to restore
@@ -26,7 +26,7 @@ WORKDIR "/src/TodoApiApp"
 RUN dotnet publish "TodoApi.csproj" -c Release -o /app/publish --no-restore
 
 # Stage 4: Final Runtime Image
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-noble AS runtime
 WORKDIR /app
 COPY --from=publish /app/publish .
 # Ensure the DLL name matches your project output
