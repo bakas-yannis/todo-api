@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using TodoApi.Models;
 using TodoApi.Services;
 
@@ -19,10 +20,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUi(options =>
-    {
-        options.DocumentPath = "/openapi/v1.json";
-    });
+    app.MapScalarApiReference(); // The new UI
 }
 
 app.UseHttpsRedirection();
