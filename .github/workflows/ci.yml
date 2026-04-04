@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/todo-api
+  IMAGE_NAME: ${{ github.repository || 'bakas-yannis/todo-api' }}
 
 jobs:
   build-and-test:
@@ -44,6 +44,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set short SHA
+        run: |
+          SHA="${{ github.sha }}"
+          echo "SHORT_SHA=${SHA:-$(git rev-parse --short HEAD)}" >> $GITHUB_ENV
 
       - name: Log in to GHCR
         uses: docker/login-action@v3
