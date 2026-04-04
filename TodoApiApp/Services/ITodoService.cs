@@ -6,7 +6,7 @@ public interface ITodoService
 {
     Task<IEnumerable<TodoItem>> GetTodoItems();
     Task<TodoItem?> GetTodoItem(long id);
-    Task<TodoItem> PostTodoItem(TodoItem item);
-    Task UpdateTodoItem(long id, TodoItem item);
+    Task<TodoItem> PostTodoItem(CreateTodoItemDto dto);
+    Task UpdateTodoItem(long id, UpdateTodoItemDto dto);
     Task DeleteTodoItem(long id);
 }

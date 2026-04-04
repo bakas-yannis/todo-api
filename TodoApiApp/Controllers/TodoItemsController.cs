@@ -42,18 +42,12 @@ namespace TodoApi.Controllers
         }
 
         // PUT: api/TodoItems/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
+        public async Task<IActionResult> PutTodoItem(long id, UpdateTodoItemDto dto)
         {
-            if (id != todoItem.Id)
-            {
-                return BadRequest();
-            }
-
             try
             {
-                await _service.UpdateTodoItem(id, todoItem);
+                await _service.UpdateTodoItem(id, dto);
             }
             catch (KeyNotFoundException)
             {
@@ -64,13 +58,11 @@ namespace TodoApi.Controllers
         }
 
         // POST: api/TodoItems
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+        public async Task<ActionResult<TodoItem>> PostTodoItem(CreateTodoItemDto dto)
         {
-            await _service.PostTodoItem(todoItem);
-
-            return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
+            var created = await _service.PostTodoItem(dto);
+            return CreatedAtAction("GetTodoItem", new { id = created.Id }, created);
         }
 
         // DELETE: api/TodoItems/5

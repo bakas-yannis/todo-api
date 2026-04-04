@@ -22,16 +22,29 @@ public class TodoService : ITodoService
         return await _context.TodoItems.FindAsync(id);
     }
 
-    public async Task<TodoItem> PostTodoItem(TodoItem item)
+    public async Task<TodoItem> PostTodoItem(CreateTodoItemDto dto)
     {
+        var item = new TodoItem
+        {
+            Name = dto.Name,
+            IsComplete = dto.IsComplete
+        };
+
         _context.TodoItems.Add(item);
         await _context.SaveChangesAsync();
 
         return item;
     }
 
-    public async Task UpdateTodoItem(long id, TodoItem item)
+    public async Task UpdateTodoItem(long id, UpdateTodoItemDto dto)
     {
+        var item = new TodoItem
+        {
+            Id = id,
+            Name = dto.Name,
+            IsComplete = dto.IsComplete
+        };
+
         _context.Entry(item).State = EntityState.Modified;
 
         try
@@ -41,7 +54,10 @@ public class TodoService : ITodoService
         catch (DbUpdateConcurrencyException)
         {
             if (!await _context.TodoItems.AnyAsync(e => e.Id == id))
+            {
                 throw new KeyNotFoundException($"TodoItem {id} not found.");
+            }
+
             throw;
         }
     }
