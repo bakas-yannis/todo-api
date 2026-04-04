@@ -22,3 +22,6 @@ jobs:
       - name: Build and Test with Docker
         run: |
           docker build -t todo-api-ci:${{ github.sha }} .
+
+      - name: Confirm build succeeded  # This only runs if the above passed
+        run: echo "✅ Build and tests passed for ${{ github.sha }}"
