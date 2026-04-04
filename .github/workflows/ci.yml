@@ -7,6 +7,10 @@ on:
   push:
     branches: [ "main" ]  # Also runs when you merge into main
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/todo-api
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
